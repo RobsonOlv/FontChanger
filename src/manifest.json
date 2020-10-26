@@ -5,8 +5,9 @@
     "description": "Allows user to select text on page and change its font-related properties",
     "content_scripts": [
         {
-            "css": "style.css",
-            "js": "main.js"
+            "matches": ["<all_urls>"],
+            "css": ["style.css"],
+            "js": ["main.js"]
         }
     ]
 }
