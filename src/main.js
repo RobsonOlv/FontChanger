@@ -1,1 +1,3 @@
-alert("Hey, it works!");
+window.onmouseup = () => {
+    console.log(window.getSelection());
+};
