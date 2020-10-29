@@ -20,13 +20,13 @@ let selected = [];
 // Listens for selection event
 window.onmouseup = () => {
     const selection = window.getSelection();
-    showBox(selection.getRangeAt(selection.rangeCount - 1).getBoundingClientRect());
-
     selected = [];
+    hideBox();
+
     for (let i = 0; i < selection.rangeCount; i++) {
         const range = selection.getRangeAt(i);
         if (!range.toString().trim()) continue;
-
+        
         const { parentNode } = range.startContainer;
         if (parentNode.id === 'font-changer-span') {
             selected.push(parentNode);
@@ -36,9 +36,12 @@ window.onmouseup = () => {
             
             const content = range.extractContents();
             span.appendChild(content);
-
+            
             range.insertNode(span);
             selected.push(span);
         }
     }
+
+    if (selected.length > 0)
+        showBox(selection.getRangeAt(selection.rangeCount - 1).getBoundingClientRect());
 };
