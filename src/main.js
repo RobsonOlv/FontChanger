@@ -15,20 +15,32 @@ box.innerHTML = 'Hey!';
 document.querySelector('body').appendChild(box);
 hideBox();
 
+let selected = [];
+
 // Listens for selection event
 window.onmouseup = () => {
     const selection = window.getSelection();
     showBox(selection.getRangeAt(selection.rangeCount - 1).getBoundingClientRect());
 
+    selected = [];
     for (let i = 0; i < selection.rangeCount; i++) {
         const range = selection.getRangeAt(i);
-        const content = range.extractContents();
-        console.log(content);
+        if (range.toString().trim() === '') continue;
 
-        const span = document.createElement('span');
-        // TODO: Add style to text based on what the user asked for
-        span.appendChild(content);
+        const { parentNode } = range.startContainer;
+        if (parentNode && parentNode.id === 'font-changer-span') {
+            selected.push(parentNode);
+        } else {
+            const span = document.createElement('span');
+            span.id = 'font-changer-span';
+            
+            const content = range.extractContents();
+            span.appendChild(content);
 
-        range.insertNode(span);
+            range.insertNode(span);
+            selected.push(span);
+        }
     }
+
+    console.log(selected);
 };
