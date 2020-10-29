@@ -1,3 +1,4 @@
+// TODO: Create box.js
 const hideBox = () => { box.style.display = 'none'; };
 const showBox = ({ bottom, left, width, height }) => {
     box.style.left = left + width + 10 + 'px';
@@ -25,23 +26,22 @@ window.onmouseup = () => {
 
     for (let i = 0; i < selection.rangeCount; i++) {
         const range = selection.getRangeAt(i);
-        if (!range.toString().trim()) continue;
+        if (range.toString().trim() === '') continue;
         
         const { parentNode } = range.startContainer;
-        if (parentNode.id === 'font-changer-span') {
+        // TODO: Improve condition
+        if (parentNode.innerHTML === range.toString()) {
             selected.push(parentNode);
         } else {
             const span = document.createElement('span');
-            span.id = 'font-changer-span';
-            
             const content = range.extractContents();
+
             span.appendChild(content);
-            
             range.insertNode(span);
             selected.push(span);
         }
     }
 
     if (selected.length > 0)
-        showBox(selection.getRangeAt(selection.rangeCount - 1).getBoundingClientRect());
+        showBox(selected[selected.length - 1].getBoundingClientRect());
 };
