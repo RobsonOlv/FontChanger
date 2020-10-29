@@ -25,10 +25,10 @@ window.onmouseup = () => {
     selected = [];
     for (let i = 0; i < selection.rangeCount; i++) {
         const range = selection.getRangeAt(i);
-        if (range.toString().trim() === '') continue;
+        if (!range.toString().trim()) continue;
 
         const { parentNode } = range.startContainer;
-        if (parentNode && parentNode.id === 'font-changer-span') {
+        if (parentNode.id === 'font-changer-span') {
             selected.push(parentNode);
         } else {
             const span = document.createElement('span');
@@ -41,6 +41,4 @@ window.onmouseup = () => {
             selected.push(span);
         }
     }
-
-    console.log(selected);
 };
